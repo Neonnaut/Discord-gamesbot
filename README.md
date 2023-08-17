@@ -1,4 +1,4 @@
-# GameBot
+# Discord-Gamesbot
 
 This is an advanced Discord Bot that plays a few games and does a few other things.
 
@@ -13,6 +13,6 @@ This is an advanced Discord Bot that plays a few games and does a few other thin
 - Rename the file `.env.example` to `.env`. Make sure the file is called `.env` and _not_ ".env.txt"
 - Install python 3.9+ Make sure you have set Python to the system path
 - Install dependencies with `pip install REQUIREMENTS.txt`
-- Run it as a module with `python gamebot`, or `sudo nohup python3 gamebot` or whatever command you use to run python scripts in your environment; or directly run the `__main__.py` file. Congratulations, you are now self-hosting a discord bot
+- Run it as a module with `python gamesbot`, or `sudo nohup python3 gamesbot` or whatever command you use to run python scripts in your environment; or directly run the `__main__.py` file. Congratulations, you are now self-hosting a discord bot
 - You might need to turn on all intents in the developer portal or change the bots intents in the `__main__.py` file
 - If you do not want to self-host, I suggest using a VPS like Heroku or [Fly.io](https://fly.io/docs/getting-started/)
