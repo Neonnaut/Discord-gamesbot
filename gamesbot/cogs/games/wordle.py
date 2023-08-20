@@ -14,88 +14,88 @@ all_words = set(word.strip() for word in open('cogs/games/dict-sowpods.txt'))
 
 EMOJI_CODES = {
     'green': {
-        'a': '<:green_a:1036629308262858894>',
-        'b': '<:green_b:1036629310456475688>',
-        'c': '<:green_c:1036629312209702942>',
-        'd': '<:green_d:1036629313891610674>',
-        'e': '<:green_e:1036629315699355678>',
-        'f': '<:green_f:1036629317481930813>',
-        'g': '<:green_g:1036629319625228308>',
-        'h': '<:green_h:1036629321588154408>',
-        'i': '<:green_i:1036629323291045909>',
-        'j': '<:green_j:1036629325228810303>',
-        'k': '<:green_k:1036629327028162581>',
-        'l': '<:green_l:1036629329293103104>',
-        'm': '<:green_m:1036629331004379197>',
-        'n': '<:green_n:1036629333290262588>',
-        'o': '<:green_o:1036629334921846916>',
-        'p': '<:green_p:1036629337350348830>',
-        'q': '<:green_q:1036629339162300436>',
-        'r': '<:green_r:1036629341125234778>',
-        's': '<:green_s:1036629342895218768>',
-        't': '<:green_t:1036629344614879283>',
-        'u': '<:green_u:1036629346393260064>',
-        'v': '<:green_v:1036629348171653130>',
-        'w': '<:green_w:1036629349799047218>',
-        'x': '<:green_x:1036629351380303943>',
-        'y': '<:green_y:1036629353557143632>',
-        'z': '<:green_z:1036629355482320906>',
+        'a': '[2;32m[2;47m A ',
+        'b': '[2;32m[2;47m B ',
+        'c': '[2;32m[2;47m C ',
+        'd': '[2;32m[2;47m D ',
+        'e': '[2;32m[2;47m E ',
+        'f': '[2;32m[2;47m F ',
+        'g': '[2;32m[2;47m G ',
+        'h': '[2;32m[2;47m H ',
+        'i': '[2;32m[2;47m I ',
+        'j': '[2;32m[2;47m J ',
+        'k': '[2;32m[2;47m K ',
+        'l': '[2;32m[2;47m L ',
+        'm': '[2;32m[2;47m M ',
+        'n': '[2;32m[2;47m N ',
+        'o': '[2;32m[2;47m O ',
+        'p': '[2;32m[2;47m P ',
+        'q': '[2;32m[2;47m Q ',
+        'r': '[2;32m[2;47m R ',
+        's': '[2;32m[2;47m S ',
+        't': '[2;32m[2;47m T ',
+        'u': '[2;32m[2;47m U ',
+        'v': '[2;32m[2;47m V ',
+        'w': '[2;32m[2;47m W ',
+        'x': '[2;32m[2;47m X ',
+        'y': '[2;32m[2;47m Y ',
+        'z': '[2;32m[2;47m Z ',
     },
     'yellow': {
-        'a': '<:yellow_a:1038074301699600385>',
-        'b': '<:yellow_b:1038074303687688262>',
-        'c': '<:yellow_c:1038074305780646019>',
-        'd': '<:yellow_d:1038074307823284254>',
-        'e': '<:yellow_e:1038074309656190977>',
-        'f': '<:yellow_f:1038074311753334804>',
-        'g': '<:yellow_g:1038074313649172480>',
-        'h': '<:yellow_h:1038074315301715999>',
-        'i': '<:yellow_i:1038074317033975868>',
-        'j': '<:yellow_j:1038074318745247774>',
-        'k': '<:yellow_k:1038074320485875814>',
-        'l': '<:yellow_l:1038074322486566942>',
-        'm': '<:yellow_m:1038074323958775910>',
-        'n': '<:yellow_n:1038074325464514631>',
-        'o': '<:yellow_o:1038074327565881414>',
-        'p': '<:yellow_p:1038074329398771763>',
-        'q': '<:yellow_q:1038074330757734411>',
-        'r': '<:yellow_r:1038074332846510130>',
-        's': '<:yellow_s:1038074334591328277>',
-        't': '<:yellow_t:1038074336285835354>',
-        'u': '<:yellow_u:1038074337959350362>',
-        'v': '<:yellow_v:1038074339553189999>',
-        'w': '<:yellow_w:1038074341646147584>',
-        'x': '<:yellow_x:1038074343227396107>',
-        'y': '<:yellow_y:1038074347715309668>',
-        'z': '<:yellow_z:1038074349451743273>',
+        'a': '[2;47m[2;33m A᷈ ',
+        'b': '[2;47m[2;33m B᷈ ',
+        'c': '[2;47m[2;33m C᷈ ',
+        'd': '[2;47m[2;33m D᷈ ',
+        'e': '[2;47m[2;33m E᷈ ',
+        'f': '[2;47m[2;33m F᷈ ',
+        'g': '[2;47m[2;33m G᷈ ',
+        'h': '[2;47m[2;33m H᷈ ',
+        'i': '[2;47m[2;33m I᷈ ',
+        'j': '[2;47m[2;33m J᷈ ',
+        'k': '[2;47m[2;33m K᷈ ',
+        'l': '[2;47m[2;33m L᷈ ',
+        'm': '[2;47m[2;33m M᷈ ',
+        'n': '[2;47m[2;33m N᷈ ',
+        'o': '[2;47m[2;33m O᷈ ',
+        'p': '[2;47m[2;33m P᷈ ',
+        'q': '[2;47m[2;33m Q᷈ ',
+        'r': '[2;47m[2;33m R᷈ ',
+        's': '[2;47m[2;33m S᷈ ',
+        't': '[2;47m[2;33m T᷈ ',
+        'u': '[2;47m[2;33m U᷈ ',
+        'v': '[2;47m[2;33m V᷈ ',
+        'w': '[2;47m[2;33m W᷈ ',
+        'x': '[2;47m[2;33m X᷈ ',
+        'y': '[2;47m[2;33m Y᷈ ',
+        'z': '[2;47m[2;33m Z᷈ ',
     },
     'grey': {
-        'a': '<:grey_a:1036628776676765746>',
-        'b': '<:grey_b:1036628778887163955>',
-        'c': '<:grey_c:1036628780510347334>',
-        'd': '<:grey_d:1036628782183895100>',
-        'e': '<:grey_e:1036628784163586149>',
-        'f': '<:grey_f:1036628785799368714>',
-        'g': '<:grey_g:1036628787443544074>',
-        'h': '<:grey_h:1036628789121265714>',
-        'i': '<:grey_i:1036628791017091112>',
-        'j': '<:grey_j:1036628792791269508>',
-        'k': '<:grey_k:1036628794745819186>',
-        'l': '<:grey_l:1036628796767486002>',
-        'm': '<:grey_m:1036628798860431391>',
-        'n': '<:grey_n:1036628800475234304>',
-        'o': '<:grey_o:1036628802505277491>',
-        'p': '<:grey_p:1036628804606623754>',
-        'q': '<:grey_q:1036628806506655774>',
-        'r': '<:grey_r:1036628808528302161>',
-        's': '<:grey_s:1036628810587701310>',
-        't': '<:grey_t:1036628812902965268>',
-        'u': '<:grey_u:1036628814740074648>',
-        'v': '<:grey_v:1036628816719794257>',
-        'w': '<:grey_w:1036628818435244114>',
-        'x': '<:grey_x:1036628820486266970>',
-        'y': '<:grey_y:1036628822474367036>',
-        'z': '<:grey_z:1036628824286298152>',
+        'a': '[2;42m[2;37m A̽ ',
+        'b': '[2;42m[2;37m B̽ ',
+        'c': '[2;42m[2;37m C̽ ',
+        'd': '[2;42m[2;37m D̽ ',
+        'e': '[2;42m[2;37m E̽ ',
+        'f': '[2;42m[2;37m F̽ ',
+        'g': '[2;42m[2;37m G̽ ',
+        'h': '[2;42m[2;37m H̽ ',
+        'i': '[2;42m[2;37m I̽ ',
+        'j': '[2;42m[2;37m J̽ ',
+        'k': '[2;42m[2;37m K̽ ',
+        'l': '[2;42m[2;37m L̽ ',
+        'm': '[2;42m[2;37m M̽ ',
+        'n': '[2;42m[2;37m N̽ ',
+        'o': '[2;42m[2;37m O̽ ',
+        'p': '[2;42m[2;37m P̽ ',
+        'q': '[2;42m[2;37m Q̽ ',
+        'r': '[2;42m[2;37m R̽ ',
+        's': '[2;42m[2;37m S̽ ',
+        't': '[2;42m[2;37m T̽ ',
+        'u': '[2;42m[2;37m U̽ ',
+        'v': '[2;42m[2;37m V̽ ',
+        'w': '[2;42m[2;37m W̽ ',
+        'x': '[2;42m[2;37m X̽ ',
+        'y': '[2;42m[2;37m Y̽ ',
+        'z': '[2;42m[2;37m Z̽ ',
     },
 }
 
@@ -149,10 +149,10 @@ def generate_puzzle_embed(user: discord.User, puzzle_id: int) -> discord.Embed:
         discord.Embed: The embed to be sent
     """
     embed = discord.Embed(
-        title=f'Discord Wordle #{puzzle_id}',
-        color=0X45c33a,
-        description = '\n'.join([generate_blanks()] * 6)
+        title=f'Discord Wordle #{puzzle_id} 0/6',
+        color=0X45c33a
     )
+
     embed.set_author(name=user.name, icon_url=user.display_avatar.url)
     embed.set_footer(
         text='To guess, reply to this message with a word'
@@ -170,32 +170,39 @@ def update_embed(embed: discord.Embed, guess: str) -> discord.Embed:
     Returns:
         discord.Embed: The updated embed
     """
-    puzzle_id = embed.title.split()[-1]
+    title = embed.title.replace('Discord Wordle ', '')
+
+    puzzle_id = title.split()[0]
     puzzle_id = int(puzzle_id.replace('#', ''))
+
+    no_of_guesses = title.split()[1].split('/')[0]
+    no_of_guesses = int(no_of_guesses) + 1
+    embed.title = f"Discord Wordle #{puzzle_id} {no_of_guesses}/6"
+
     answer = popular_words[puzzle_id]
+
+    # Add answer to embed description
     colored_word = generate_colored_word(guess, answer)
-    empty_slot = generate_blanks()
-    # replace the first blank with the colored word
-    embed.description = embed.description.replace(empty_slot, colored_word, 1)
+    old_description = embed.description[:-3] if embed.description else '```ansi\n'
+    new_description = f'{old_description}\n{colored_word}```'
+    embed.description = new_description
+
     # check for game over
-    num_empty_slots = embed.description.count(empty_slot)
     if guess == answer:
-        if num_empty_slots == 0:
-            embed.description += '\n\nPhew!'
-        if num_empty_slots == 1:
-            embed.description += '\n\nGreat!'
-        if num_empty_slots == 2:
-            embed.description += '\n\nSplendid!'
-        if num_empty_slots == 3:
-            embed.description += '\n\nImpressive!'
-        if num_empty_slots == 4:
-            embed.description += '\n\nMagnificent!'
-        if num_empty_slots == 5:
-            embed.description += '\n\nGenius!'
-        embed.set_footer(text='')
-    elif num_empty_slots == 0:
-        embed.description += f'\n\nThe answer was {answer}!'
-        embed.set_footer(text='')
+        if no_of_guesses == 6:
+            embed.set_footer(text='Phew!')
+        if no_of_guesses == 5:
+            embed.set_footer(text='Great!')
+        if no_of_guesses == 4:
+            embed.set_footer(text='Splendid!')
+        if no_of_guesses == 3:
+            embed.set_footer(text='Impressive!')
+        if no_of_guesses == 2:
+            embed.set_footer(text='Magnificent!')
+        if no_of_guesses == 1:
+            embed.set_footer(text='Genius!')
+    elif no_of_guesses == 6:
+        embed.set_footer(text=f'The answer was {answer}!')
     return embed
 
 
@@ -230,7 +237,6 @@ def daily_puzzle_id() -> int:
     time_diff = datetime.datetime.now().date() - datetime.date(2022, 1, 1)
     return time_diff.days % num_words
 
-
 def is_game_over(embed: discord.Embed) -> bool:
     """
     Checks if the game is over in the embed
@@ -239,8 +245,10 @@ def is_game_over(embed: discord.Embed) -> bool:
     Returns:
         bool: Whether the game is over
     """
-    return '\n\n' in embed.description
-
+    if embed.footer.text == 'To guess, reply to this message with a word':
+        return False
+    else:
+        return True
 
 def generate_info_embed(prefix) -> discord.Embed:
     """
@@ -248,8 +256,6 @@ def generate_info_embed(prefix) -> discord.Embed:
     Returns:
         discord.Embed: The embed to be sent
     """
-
-    # Username
     embed = discord.Embed(
         title='Guess the Wordle in 6 tries',
         description=
@@ -262,7 +268,7 @@ def generate_info_embed(prefix) -> discord.Embed:
         inline=False,
         name=f'**Example**',
         value=
-            f'{EMOJI_CODES["green"]["w"]}{EMOJI_CODES["yellow"]["e"]}{EMOJI_CODES["grey"]["a"]}{EMOJI_CODES["grey"]["r"]}{EMOJI_CODES["grey"]["y"]}\n'
+            f'```ansi\n{EMOJI_CODES["green"]["w"]}{EMOJI_CODES["yellow"]["e"]}{EMOJI_CODES["grey"]["a"]}{EMOJI_CODES["grey"]["r"]}{EMOJI_CODES["grey"]["y"]}```'
             '__W__ is in the word and in the correct spot\n'
             '__E__ is in the word but in the wrong spot\n'
             '__A__ is not in the word in any spot\n'
@@ -347,6 +353,6 @@ async def send_wordle_error(message, error):
     """Send error reply and delete message"""
     await message.reply(f'{WARN} {error}', delete_after=5)
     try:
-        message.delete()
+        await message.delete()
     except:
         pass

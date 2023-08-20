@@ -10,9 +10,10 @@ from .chess.lobby import Chess_Lobby
 from .flag_guesser import check_flag_guess, get_flag
 from .minesweeper import print_minesweeper
 from .place import Matrix
-from .wordle import (daily_puzzle_id, generate_info_embed,
-                     generate_puzzle_embed, process_message_as_guess,
-                     random_puzzle_id)
+from .wordle import (
+    daily_puzzle_id, generate_info_embed, generate_puzzle_embed,
+    process_message_as_guess, random_puzzle_id
+)
 
 
 class Games(commands.Cog, name='games'):
@@ -286,7 +287,7 @@ class Games(commands.Cog, name='games'):
     async def wordle(
         self,
         ctx: commands.Context,
-        wordle: str
+        puzzle: str
     ):
         """
         Plays a game of Wordle.
@@ -298,13 +299,13 @@ class Games(commands.Cog, name='games'):
         
         Use `|h|wordle help` for info on how to play.
         """
-        if wordle in ['random','r','rand',None]:
+        if puzzle in ['random','r','rand',None]:
             await ctx.reply(embed=generate_puzzle_embed(ctx.author, random_puzzle_id()), mention_author=False)
-        elif wordle in ['daily','d','today','todays']:
+        elif puzzle in ['daily','d','today','todays']:
             await ctx.reply(embed=generate_puzzle_embed(ctx.author, daily_puzzle_id()), mention_author=False)
-        elif wordle in ['info','help','?']:
+        elif puzzle in ['info','help','?']:
             await ctx.reply(embed=generate_info_embed(ctx.clean_prefix), mention_author=False, ephemeral=False)
-        elif wordle.isdigit():
+        elif puzzle.isdigit():
             await ctx.reply(embed=generate_puzzle_embed(ctx.author, wordle), mention_author=False)
         else:
             await ctx.reply(embed=generate_info_embed(ctx.clean_prefix), ephemeral=True)
