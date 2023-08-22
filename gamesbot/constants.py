@@ -8,8 +8,9 @@ DISCORD_CLIENT = os.getenv('DISCORD_CLIENT')
 PREFIX = '!!'
 ACTIVITY = f'Waiting for {PREFIX} commands'
 DESCRIPTION = 'A bot with commands for games, querying Google Sheets, and other utilities.'
-DBFILE = 'bot.sqlite'
 TESTING = True if os.getenv('TESTING') == 'True' else False
+
+DBFILE = 'bot.sqlite'
 
 # Gsheets
 GSHEETS_CLIENT = {
@@ -35,10 +36,10 @@ PROJECTSTART = datetime.strptime('2022, 10, 24', '%Y, %m, %d')
 SKIPPEDWEEKS = int(1)
 
 # Emojis
-CHECK = '<:check:1001706162665832448>'
-ERR = '<:err:1001706158786101269>'
-WARN = '<:warn:1001706160438657109>'
-INFO = '<:info:1003510951515005008>'
-DIAMOND = '<:sgd:1135150741120622622>'
+CHECK = '✅>'
+ERR = '❌'
+WARN = '⚠️'
+INFO = '🛈'
+DIAMOND = '🔹'
 
 #POSTGRES_SERVER = os.getenv('POSTGRES_SERVER')
