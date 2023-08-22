@@ -282,7 +282,7 @@ class Games(commands.Cog, name='games'):
 
     @commands.hybrid_command(name='wordle', description='Plays a game of Wordle : <wordle_id> | daily | random | help.')
     @commands.cooldown(1, 5, commands.BucketType.user)
-    @discord.app_commands.describe(wordle='<wordle_id>, daily, random, or help')
+    @discord.app_commands.describe(puzzle='<wordle_id>, daily, random, or help')
     @commands.guild_only()
     async def wordle(
         self,
@@ -306,7 +306,7 @@ class Games(commands.Cog, name='games'):
         elif puzzle in ['info','help','?']:
             await ctx.reply(embed=generate_info_embed(ctx.clean_prefix), mention_author=False, ephemeral=False)
         elif puzzle.isdigit():
-            await ctx.reply(embed=generate_puzzle_embed(ctx.author, wordle), mention_author=False)
+            await ctx.reply(embed=generate_puzzle_embed(ctx.author, puzzle), mention_author=False)
         else:
             await ctx.reply(embed=generate_info_embed(ctx.clean_prefix), ephemeral=True)
 

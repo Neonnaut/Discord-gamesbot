@@ -4,12 +4,11 @@ import discord
 import logging
 from typing import Optional
 from discord.ext import commands
-import importlib
 from constants import DBFILE, CHECK, PREFIX, DIAMOND
 
-COGSFILE = 'cogs.'
+logger = logging.getLogger('logger')
 
-admin_loger = logging.getLogger('admin_loger')
+COGSFILE = 'cogs.'
 
 class Admin(commands.Cog, name='admin'):
     """For administrators only."""
@@ -29,7 +28,7 @@ class Admin(commands.Cog, name='admin'):
             #importlib.reload(module)
             await ctx.send(f'{CHECK} Successfully loaded: {cog}')
         except commands.ExtensionError as e:
-            admin_loger.exception(str(e))
+            logger.exception(str(e))
             return await self.bot.send_error(ctx, e)
 
     @commands.command()
@@ -42,7 +41,7 @@ class Admin(commands.Cog, name='admin'):
             await self.bot.unload_extension(f'{COGSFILE}{cog}')
             await self.bot.load_extension(f'{COGSFILE}{cog}')
         except commands.ExtensionError as e:
-            admin_loger.exception(str(e))
+            logger.exception(str(e))
             return await self.bot.send_error(ctx, e)
         await ctx.send(f'{CHECK} Successfully reloaded: {cog}')
 
@@ -50,7 +49,6 @@ class Admin(commands.Cog, name='admin'):
     @commands.is_owner()
     async def reload_cogs(self, ctx:commands.Context):
         """Command which reloads all cogs."""
-        cog = cog.casefold()
         for cog in self.bot.cogs.keys():
             await self.bot.load_extension(f'{COGSFILE}{cog}')
             await self.bot.unload_extension(f'{COGSFILE}{cog}')
@@ -58,7 +56,7 @@ class Admin(commands.Cog, name='admin'):
                 await self.bot.load_extension(f'{COGSFILE}{cog}')
                 await ctx.send(f'{CHECK} Reloaded {cog}')
             except commands.ExtensionError as e:
-                admin_loger.exception(str(e))
+                logger.exception(str(e))
                 await self.bot.send_error(ctx, f'Failed to reload. {cog}.')
         await ctx.send('Done.')
 
@@ -74,7 +72,7 @@ class Admin(commands.Cog, name='admin'):
             await self.bot.unload_extension(f'{COGSFILE}{cog}')
             await ctx.send(f'{CHECK} Successfully unloaded: {cog}')
         except commands.ExtensionError as e:
-            admin_loger.exception(str(e))
+            logger.exception(str(e))
             return await self.bot.send_error(ctx, e)
         
     @commands.command()
@@ -201,7 +199,7 @@ class Admin(commands.Cog, name='admin'):
         try:
             await ctx.guild.get_member(self.bot.user.id).edit(nick=name)
         except Exception as e:
-            admin_loger.exception(str(e))
+            logger.exception(str(e))
             return await self.bot.send_error(ctx, e)
         await ctx.send(f"{CHECK} Bot's nickname has been changed to {name}!")
 
@@ -217,7 +215,7 @@ class Admin(commands.Cog, name='admin'):
                 status=status
             )
         except Exception as e:
-            admin_loger.exception(str(e))
+            logger.exception(str(e))
             return await self.bot.send_error(ctx, e)
         await ctx.send(f'{CHECK} Bot presence changed to activity: {activity}, status: {status}')
 
@@ -233,7 +231,7 @@ class Admin(commands.Cog, name='admin'):
         try:
             self.bot.command_prefix = commands.when_mentioned_or(*[PREFIX, prefix])
         except Exception as e:
-            admin_loger.exception(str(e))
+            logger.exception(str(e))
             return await self.bot.send_error(ctx, 'An error occured. Nothing happened')
         await ctx.send(f'{CHECK} The custom prefix has been succesfully changed.')
 
@@ -272,7 +270,7 @@ class Admin(commands.Cog, name='admin'):
             await guild.leave() # Guild found
             await ctx.send(f'I left {guild.name}!')
         except Exception as e:
-            admin_loger.exception(str(e))
+            logger.exception(str(e))
             await self.bot.send_error(ctx, 'Not able to leave this guild.')
 
     @commands.command()
@@ -287,7 +285,7 @@ class Admin(commands.Cog, name='admin'):
                 except:
                     pass
         await ctx.send('Closing the connection.')
-        admin_loger.info('Closing the connection.')
+        logger.info('Closing the connection.')
         await self.bot.close()
 
     @commands.command()
@@ -298,7 +296,7 @@ class Admin(commands.Cog, name='admin'):
             commands = await self.bot.tree.sync(guild=None)
             await ctx.send(f'{CHECK} {len(commands)} slash commands synced!')
         except Exception as e:
-            admin_loger.exception(str(e))
+            logger.exception(str(e))
             await self.bot.send_error(ctx, 'Slash commands were not synced!')
 
 async def setup(bot: commands.bot):

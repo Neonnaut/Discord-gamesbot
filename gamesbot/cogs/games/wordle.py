@@ -3,7 +3,7 @@ import random
 import re
 from typing import List, Optional
 
-from constants import ERR, WARN
+from constants import WARN
 
 import discord
 from constants import WORDLE_SORT_KEY
@@ -42,102 +42,109 @@ EMOJI_CODES = {
         'z': '[2;32m[2;47m Z ',
     },
     'yellow': {
-        'a': '[2;47m[2;33m A᷈ ',
-        'b': '[2;47m[2;33m B᷈ ',
-        'c': '[2;47m[2;33m C᷈ ',
-        'd': '[2;47m[2;33m D᷈ ',
-        'e': '[2;47m[2;33m E᷈ ',
-        'f': '[2;47m[2;33m F᷈ ',
-        'g': '[2;47m[2;33m G᷈ ',
-        'h': '[2;47m[2;33m H᷈ ',
-        'i': '[2;47m[2;33m I᷈ ',
-        'j': '[2;47m[2;33m J᷈ ',
-        'k': '[2;47m[2;33m K᷈ ',
-        'l': '[2;47m[2;33m L᷈ ',
-        'm': '[2;47m[2;33m M᷈ ',
-        'n': '[2;47m[2;33m N᷈ ',
-        'o': '[2;47m[2;33m O᷈ ',
-        'p': '[2;47m[2;33m P᷈ ',
-        'q': '[2;47m[2;33m Q᷈ ',
-        'r': '[2;47m[2;33m R᷈ ',
-        's': '[2;47m[2;33m S᷈ ',
-        't': '[2;47m[2;33m T᷈ ',
-        'u': '[2;47m[2;33m U᷈ ',
-        'v': '[2;47m[2;33m V᷈ ',
-        'w': '[2;47m[2;33m W᷈ ',
-        'x': '[2;47m[2;33m X᷈ ',
-        'y': '[2;47m[2;33m Y᷈ ',
-        'z': '[2;47m[2;33m Z᷈ ',
+        'a': '[2;41m[2;37m A̰ ',
+        'b': '[2;41m[2;37m B̰ ',
+        'c': '[2;41m[2;37m C̰ ',
+        'd': '[2;41m[2;37m D̰ ',
+        'e': '[2;41m[2;37m Ḛ ',
+        'f': '[2;41m[2;37m F̰ ',
+        'g': '[2;41m[2;37m G̰ ',
+        'h': '[2;41m[2;37m H̰ ',
+        'i': '[2;41m[2;37m Ḭ ',
+        'j': '[2;41m[2;37m J̰ ',
+        'k': '[2;41m[2;37m K̰ ',
+        'l': '[2;41m[2;37m L̰ ',
+        'm': '[2;41m[2;37m M̰ ',
+        'n': '[2;41m[2;37m N̰ ',
+        'o': '[2;41m[2;37m O̰ ',
+        'p': '[2;41m[2;37m P̰ ',
+        'q': '[2;41m[2;37m Q̰ ',
+        'r': '[2;41m[2;37m R̰ ',
+        's': '[2;41m[2;37m S̰ ',
+        't': '[2;41m[2;37m T̰ ',
+        'u': '[2;41m[2;37m Ṵ ',
+        'v': '[2;41m[2;37m V̰ ',
+        'w': '[2;41m[2;37m W̰ ',
+        'x': '[2;41m[2;37m X̰ ',
+        'y': '[2;41m[2;37m Y̰ ',
+        'z': '[2;41m[2;37m Z̰ ',
     },
     'grey': {
-        'a': '[2;42m[2;37m A̽ ',
-        'b': '[2;42m[2;37m B̽ ',
-        'c': '[2;42m[2;37m C̽ ',
-        'd': '[2;42m[2;37m D̽ ',
-        'e': '[2;42m[2;37m E̽ ',
-        'f': '[2;42m[2;37m F̽ ',
-        'g': '[2;42m[2;37m G̽ ',
-        'h': '[2;42m[2;37m H̽ ',
-        'i': '[2;42m[2;37m I̽ ',
-        'j': '[2;42m[2;37m J̽ ',
-        'k': '[2;42m[2;37m K̽ ',
-        'l': '[2;42m[2;37m L̽ ',
-        'm': '[2;42m[2;37m M̽ ',
-        'n': '[2;42m[2;37m N̽ ',
-        'o': '[2;42m[2;37m O̽ ',
-        'p': '[2;42m[2;37m P̽ ',
-        'q': '[2;42m[2;37m Q̽ ',
-        'r': '[2;42m[2;37m R̽ ',
-        's': '[2;42m[2;37m S̽ ',
-        't': '[2;42m[2;37m T̽ ',
-        'u': '[2;42m[2;37m U̽ ',
-        'v': '[2;42m[2;37m V̽ ',
-        'w': '[2;42m[2;37m W̽ ',
-        'x': '[2;42m[2;37m X̽ ',
-        'y': '[2;42m[2;37m Y̽ ',
-        'z': '[2;42m[2;37m Z̽ ',
+        'a': '[2;42m[2;37m A͓ ',
+        'b': '[2;42m[2;37m ͓B ',
+        'c': '[2;42m[2;37m ͓C ',
+        'd': '[2;42m[2;37m D͓ ',
+        'e': '[2;42m[2;37m E͓ ',
+        'f': '[2;42m[2;37m F͓ ',
+        'g': '[2;42m[2;37m G͓ ',
+        'h': '[2;42m[2;37m H͓ ',
+        'i': '[2;42m[2;37m I͓ ',
+        'j': '[2;42m[2;37m J͓ ',
+        'k': '[2;42m[2;37m K͓ ',
+        'l': '[2;42m[2;37m L͓ ',
+        'm': '[2;42m[2;37m M͓ ',
+        'n': '[2;42m[2;37m N͓ ',
+        'o': '[2;42m[2;37m O͓ ',
+        'p': '[2;42m[2;37m ͓P ',
+        'q': '[2;42m[2;37m Q͓ ',
+        'r': '[2;42m[2;37m R͓ ',
+        's': '[2;42m[2;37m S͓ ',
+        't': '[2;42m[2;37m T͓ ',
+        'u': '[2;42m[2;37m U͓ ',
+        'v': '[2;42m[2;37m V͓ ',
+        'w': '[2;42m[2;37m W͓ ',
+        'x': '[2;42m[2;37m X͓ ',
+        'y': '[2;42m[2;37m Y͓ ',
+        'z': '[2;42m[2;37m Z͓ ',
     },
 }
 
-
-def generate_colored_word(guess: str, answer: str) -> str:
+def generate_coloured_word(guess: str, answer: str) -> (tuple[str, list, list, list]):
     """
     Builds a string of emoji codes where each letter is
-    colored based on the key:
+    coloured based on the key:
     - Same letter, same place: Green
     - Same letter, different place: Yellow
-    - Different letter: Gray
+    - Different letter: Grey
     Args:
-        word (str): The word to be colored
+        word (str): The word to be coloured
         answer (str): The answer to the word
     Returns:
         str: A string of emoji codes
     """
-    colored_word = [EMOJI_CODES['grey'][letter] for letter in guess]
+    coloured_word = [EMOJI_CODES['grey'][letter] for letter in guess]
     guess_letters: List[Optional[str]] = list(guess)
     answer_letters: List[Optional[str]] = list(answer)
-    # change colors to green if same letter and same place
+
+    absent_letters = list(guess.upper())
+    missplaced_letters = []
+    placed_letters = []
+
+    # change colours to green if same letter and same place
     for i in range(len(guess_letters)):
         if guess_letters[i] == answer_letters[i]:
-            colored_word[i] = EMOJI_CODES['green'][guess_letters[i]]
+            my_letter = guess_letters[i].upper()
+            coloured_word[i] = EMOJI_CODES['green'][guess_letters[i]]
             answer_letters[i] = None
             guess_letters[i] = None
-    # change colors to yellow if same letter and not the same place
+            placed_letters.append(my_letter)
+            absent_letters.remove(my_letter)
+    # change colours to yellow if same letter and not the same place
     for i in range(len(guess_letters)):
         if guess_letters[i] is not None and guess_letters[i] in answer_letters:
-            colored_word[i] = EMOJI_CODES['yellow'][guess_letters[i]]
+            my_letter = guess_letters[i].upper()
+            coloured_word[i] = EMOJI_CODES['yellow'][guess_letters[i]]
             answer_letters[answer_letters.index(guess_letters[i])] = None
-    return ''.join(colored_word)
+            missplaced_letters.append(my_letter)
+            absent_letters.remove(my_letter)
 
+    for char in absent_letters:
+        if char in missplaced_letters:
+            absent_letters.remove(char)
+        elif char in placed_letters:
+            absent_letters.remove(char)
 
-def generate_blanks() -> str:
-    """
-    Generate a string of 5 blank white square emoji characters
-    Returns:
-        str: A string of white square emojis
-    """
-    return '◻️' * 5
-
+    return ''.join(coloured_word), missplaced_letters, placed_letters, absent_letters
 
 def generate_puzzle_embed(user: discord.User, puzzle_id: int) -> discord.Embed:
     """
@@ -149,16 +156,17 @@ def generate_puzzle_embed(user: discord.User, puzzle_id: int) -> discord.Embed:
         discord.Embed: The embed to be sent
     """
     embed = discord.Embed(
-        title=f'Discord Wordle #{puzzle_id} 0/6',
-        color=0X45c33a
+        title=f'Discord Wordle #{puzzle_id} 0/6 guesses',
+        colour=0X45c33a
     )
+
+    embed.add_field(value='**Correct**:\n**Missplaced**:\n**Total Absent**:',name='\u200b')
 
     embed.set_author(name=user.name, icon_url=user.display_avatar.url)
     embed.set_footer(
         text='To guess, reply to this message with a word'
     )
     return embed
-
 
 def update_embed(embed: discord.Embed, guess: str) -> discord.Embed:
     """
@@ -177,15 +185,31 @@ def update_embed(embed: discord.Embed, guess: str) -> discord.Embed:
 
     no_of_guesses = title.split()[1].split('/')[0]
     no_of_guesses = int(no_of_guesses) + 1
-    embed.title = f"Discord Wordle #{puzzle_id} {no_of_guesses}/6"
+    embed.title = f"Discord Wordle #{puzzle_id} {no_of_guesses}/6 guesses"
 
     answer = popular_words[puzzle_id]
 
     # Add answer to embed description
-    colored_word = generate_colored_word(guess, answer)
+    coloured_word, missplaced, correct, absent = generate_coloured_word(guess, answer)
     old_description = embed.description[:-3] if embed.description else '```ansi\n'
-    new_description = f'{old_description}\n{colored_word}```'
+    new_description = f'{old_description}\n{coloured_word}```'
     embed.description = new_description
+
+    myLines = embed._fields[0].get('value').split('\n')
+    correct = sorted(correct)
+
+    missplaced = sorted(missplaced)
+
+    old_absent = myLines[2].split(':')[1].split(' ')
+    absent = sorted(list(dict.fromkeys(old_absent + absent)))
+
+    embed.clear_fields()
+
+    embed.add_field(
+        value=f'**Correct**: {" ".join(correct).strip()}'
+        f'\n**Missplaced**: {" ".join(missplaced).strip()}'
+        f'\n**Total Absent**: {" ".join(absent).strip()}',
+        name='\u200b')
 
     # check for game over
     if guess == answer:
@@ -205,7 +229,6 @@ def update_embed(embed: discord.Embed, guess: str) -> discord.Embed:
         embed.set_footer(text=f'The answer was {answer}!')
     return embed
 
-
 def is_valid_word(word: str) -> bool:
     """
     Validates a word
@@ -216,7 +239,6 @@ def is_valid_word(word: str) -> bool:
     """
     return word in all_words
 
-
 def random_puzzle_id() -> int:
     """
     Generates a random puzzle ID
@@ -224,7 +246,6 @@ def random_puzzle_id() -> int:
         int: A random puzzle ID
     """
     return random.randint(0, len(popular_words) - 1)
-
 
 def daily_puzzle_id() -> int:
     """
@@ -261,7 +282,7 @@ def generate_info_embed(prefix) -> discord.Embed:
         description=
             'Each guess must be a valid 5 letter word by replying to the bot message.\n'
             'The colours of the tiles change to show how close the guess is to the word.\n',
-        color=0X45c33a
+        colour=0X45c33a
     )
     
     embed.add_field(
