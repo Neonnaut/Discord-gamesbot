@@ -7,7 +7,6 @@ import base64
 import praw
 import discord
 from craiyon import Craiyon, craiyon_utils
-from jokeapi import Jokes # Import the Jokes class
 from discord.ext import commands
 from typing import Optional
 
@@ -102,15 +101,21 @@ class Fun(commands.Cog, name='fun'):
     @commands.guild_only()
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def joke(self, ctx:commands.Context):
-        j = await Jokes()  # Initialise the class
-        joke = await j.get_joke()  # Retrieve a random joke
-        if joke["type"] == "single": # Print the joke
-            await ctx.send(joke["joke"])
+        """Tells a joke."""
+        try:
+            response = await self.bot.session.get(
+                'https://v2.jokeapi.dev/joke/Any?blacklistFlags=racist,sexist')
+        except:
+            return await self.bot.send_error(ctx, 'Request took too long')
+        joke = await response.json()
+
+        if joke['type'] == 'single':
+            await ctx.send(joke['joke'])
         else:
-            await ctx.send(joke["setup"])
+            await ctx.send(joke['setup'])
             async with ctx.typing():
-                await asyncio.sleep(3)
-                return await ctx.send(joke["delivery"])
+                await asyncio.sleep(2)
+                return await ctx.send(joke['delivery'])
 
     @commands.command(name='8ball')
     @commands.guild_only()
