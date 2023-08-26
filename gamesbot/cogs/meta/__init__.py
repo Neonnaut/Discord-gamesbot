@@ -30,7 +30,7 @@ class Meta(commands.Cog, name='meta'):
         """Shows help on a command or category of commands."""
 
         ctx = await self.bot.get_context(interaction, cls=commands.Context)
-        #await ctx.reply(f'{INFO} Help on prefix commands', mention_author=False, delete_after=3)
+        await ctx.reply(f'{DIAMOND} Help on prefix commands', mention_author=False, delete_after=3)
         if command is not None and command != 'all':
             await ctx.send_help(command)
         else:
@@ -147,52 +147,46 @@ class Meta(commands.Cog, name='meta'):
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def server_info(self, ctx:commands.Context):
         """Shows information about this server."""
-
-        onlineCount = await self.bot.fetch_guild(ctx.guild.id, with_counts=True)
-        onlineCount = onlineCount.approximate_presence_count
         server: discord.Guild = ctx.guild
-        try:
-            numberofbots = 0
-            for member in ctx.guild.members:
-                if member.bot:
-                    numberofbots += 1
-            name = server.name
-            members = f'{str(server.member_count)} ({numberofbots} Bots), {onlineCount} Online'
-            icon = server.icon
-            verification = str(server.verification_level).capitalize()
-            created = f'<t:{int(tea_time.mktime(server.created_at.timetuple()))}:D>, '\
-                f'<t:{int(tea_time.mktime(server.created_at.timetuple()))}:R>'
-            owner = server.owner.nick
-            channels = f'{len(server.text_channels)} Text, {len(server.voice_channels)} Voice, {len(server.categories)} Categories'
-            features = ', '.join([
-                str(feature).capitalize()
-                for feature in server.features
-            ]) or 'None'
+        if not server: return await ctx.send(f'Server "{server}" not found.')
 
-            banner = server.banner
+        no_of_bots = 0
+        no_of_users = 0
+        no_online = 0
+        for member in ctx.guild.members:
+            if member.bot:
+                no_of_bots += 1
+            else:
+                no_of_users += 1
+            if member.status.name == 'online':
+                no_online += 1
+        members = f'{no_of_users} users, {no_of_bots} bots, {no_online} online now'
 
-        except Exception as e:
-            await ctx.send(f'{e} {str(server)} not found.')
-            return
+        channels = f'{len(server.text_channels)} Text, '\
+            f'{len(server.voice_channels)} Voice, {len(server.categories)} Categories'
+
+        created_at = f'<t:{int(tea_time.mktime(server.created_at.timetuple()))}:D>, '\
+            f'<t:{int(tea_time.mktime(server.created_at.timetuple()))}:R>'
+
+        features = ', '.join([
+            str(feature).replace('_',' ').capitalize()
+            for feature in server.features
+        ]) or 'None'
 
         embed = discord.Embed(
-            title=f'Information About This Server', colour=0Xa69f9c
-        )
-        embed.add_field(
-            inline=True,
-            name=f'**Name**: {name}',
-            value=f'{DIAMOND}**Owner**: {owner}\n'
-            + f'{DIAMOND}**Members**: {members}\n'
-            + f'{DIAMOND}**Channels**: {channels}\n'
-            + f'{DIAMOND}**Created**: {created}\n'
-            + f'{DIAMOND}**Features**: {features}\n'
-            + f'{DIAMOND}**Verification Level**: {verification}\n'
+            title=f'Information About Server: {server.name}', colour=0Xa69f9c,
+            description=f'{DIAMOND}**Members**: {members}\n'\
+                f'{DIAMOND}**Channels**: {channels}\n'\
+                f'{DIAMOND}**Owner**: <@{server.owner.id}>\n'\
+                f'{DIAMOND}**Roles**: {len(server.roles)}\n'\
+                f'{DIAMOND}**Created**: {created_at}\n'\
+                f'{DIAMOND}**Features**: {features}\n'
         )
 
-        if icon:
-            embed.set_thumbnail(url=icon)
-        if banner:
-            embed.set_image(url=banner)
+        if server.icon:
+            embed.set_thumbnail(url=server.icon)
+        if server.banner:
+            embed.set_image(url=server.banner.url)
         await ctx.send(embed=embed)
 
     @commands.hybrid_command(aliases=['joined','userinfo'])

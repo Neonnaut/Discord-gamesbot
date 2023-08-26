@@ -39,7 +39,6 @@ SKIPPEDWEEKS = int(1)
 CHECK = '✅>'
 ERR = '❌'
 WARN = '⚠️'
-INFO = '🛈'
-DIAMOND = '🔹'
+DIAMOND = '🔸'
 
 #POSTGRES_SERVER = os.getenv('POSTGRES_SERVER')

@@ -1,16 +1,17 @@
 import asyncio
-from random import SystemRandom
-
-from bs4 import BeautifulSoup
-from io import BytesIO
 import base64
-import praw
-import discord
-from craiyon import Craiyon, craiyon_utils
-from discord.ext import commands
+from io import BytesIO
+from random import SystemRandom
 from typing import Optional
 
+from bs4 import BeautifulSoup
+from craiyon import Craiyon, craiyon_utils
+import praw
+import discord
+from discord.ext import commands
+
 from constants import REDDIT_CLIENT
+
 
 class Fun(commands.Cog, name='fun'):
     """Random and fun commands."""
@@ -100,11 +101,25 @@ class Fun(commands.Cog, name='fun'):
     @commands.command(name='joke')
     @commands.guild_only()
     @commands.cooldown(1, 1, commands.BucketType.user)
-    async def joke(self, ctx:commands.Context):
-        """Tells a joke."""
+    async def joke(self, ctx:commands.Context, type:Optional[str]):
+        """Tells a joke. Optional types are: pun, xmas, spooky, dark, nsfw, programming."""
+        if type in ['xmas','christmas','festive','yultide']:
+            type = 'Christmas?blacklistFlags=nsfw,political,racist,sexist'
+        elif type in ['programming','coding']:
+            type = 'Programming?blacklistFlags=nsfw,racist,sexist'
+        elif type == 'pun':
+            type = 'Pun?blacklistFlags=nsfw,racist,sexist'
+        elif type in ['spooky','halloween']:
+            type = 'Spooky?blacklistFlags=nsfw,racist,sexist'
+        elif type == 'dark':
+            type = 'Dark,Spooky?blacklistFlags=nsfw'
+        elif type == 'nsfw':
+            type = 'Miscellaneous,Pun,Spooky'
+        else:
+            type = 'Programming,Miscellaneous,Pun,Spooky?blacklistFlags=nsfw,political,racist,sexist'
         try:
             response = await self.bot.session.get(
-                'https://v2.jokeapi.dev/joke/Any?blacklistFlags=racist,sexist')
+                f'https://v2.jokeapi.dev/joke/{type}')
         except:
             return await self.bot.send_error(ctx, 'Request took too long')
         joke = await response.json()
@@ -134,12 +149,10 @@ class Fun(commands.Cog, name='fun'):
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def reddit(self, ctx:commands.Context, *, sub:str):
         """Gets the five hot posts from a subreddit."""
-
         try:
             r = praw.Reddit(client_id=REDDIT_CLIENT[0],
                 client_secret=REDDIT_CLIENT[1],
-                user_agent=REDDIT_CLIENT[2]
-                )
+                user_agent=REDDIT_CLIENT[2])
                     
             subreddit = r.subreddit(sub)
             subposts = []
@@ -165,7 +178,6 @@ class Fun(commands.Cog, name='fun'):
             name=f'**Five of the hottest posts:**',
             value=f'{subposts}'
         )
-
         await ctx.send(embed=embed)
 
     @commands.command()
@@ -181,9 +193,10 @@ class Fun(commands.Cog, name='fun'):
     @commands.guild_only()
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def xkcd(self, ctx:commands.Context, *, option: Optional[str]):
-        """Shows an xkcd comic, gets a random comic by default.
-        Use `|p|xkcd latest` to get the latest comic, `|p|xkcd <number> for a specific"""
-
+        """
+        Shows an xkcd comic, gets a random comic by default.
+        Use `|p|xkcd latest` to get the latest comic, `|p|xkcd <number> for a specific
+        """
         if not option: option = 'random/comic'
         url = f'https://c.xkcd.com/{option}/'
         response = await self.bot.session.get(url=url)
