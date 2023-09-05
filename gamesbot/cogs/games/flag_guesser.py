@@ -14,15 +14,14 @@ async def check_flag_guess(message: Message, parent, embed: Embed) -> None:
     if '#' not in embed.footer.text:
         return None
     try:
-        country_id = int(embed.footer.text.replace('#', ''))
+        country_id = embed.footer.text.replace('#', '')
     except:
         return None
-    country_id = country_id - 1
     
     f = open('cogs/games/countries.json', encoding="utf8")
     countries = json.load(f)
 
-    country = countries[country_id]
+    country = countries.get(country_id)
     countrys_names = country['names']
 
     answered = False
@@ -51,24 +50,22 @@ async def get_flag() -> Embed:
     countries = json.load(f)
 
     while the_limit < 40:
-        country_id = random.randint(0,len(countries))
+        country_id = str(random.randint(0,len(countries)) + 1)
 
-        if country_id+1 in already_countries:
+        if country_id in already_countries:
             the_limit += 1
         else:
             the_limit += 42
 
-        country = countries[country_id]
+        country = countries.get(country_id)
 
     country_flag_url = country['flag']
-
-    country_id = country_id+1
 
     already_countries.append(country_id)
 
     embed = Embed(
         title='Which country is this? Reply to me.',
-        color=0X45c33a,
+        colour = 0x45c33a,
     )
     embed.set_image(url=country_flag_url)
     embed.set_footer(text=f'#{country_id}')

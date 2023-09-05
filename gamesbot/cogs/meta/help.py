@@ -78,7 +78,7 @@ class MyHelpCommand(commands.MinimalHelpCommand):
         command_set: Optional[Set[commands.Command]] = None, set_author: bool = False,
         set_footer: bool = False
     ) -> Embed:
-        embed = Embed(title=title, colour=0Xa69f9c)
+        embed = Embed(title=title, colour = 0xa69f9c)
         if description:
             embed.description = description
         if set_author:

@@ -157,7 +157,7 @@ def generate_puzzle_embed(user: discord.User, puzzle_id: int) -> discord.Embed:
     """
     embed = discord.Embed(
         title=f'Discord Wordle #{puzzle_id} 0/6 guesses',
-        colour=0X45c33a
+        colour = 0x45c33a
     )
 
     embed.add_field(value='**Correct**:\n**Missplaced**:\n**Total Absent**:',name='\u200b')
@@ -282,7 +282,7 @@ def generate_info_embed(prefix) -> discord.Embed:
         description=
             'Each guess must be a valid 5 letter word by replying to the bot message.\n'
             'The colours of the tiles change to show how close the guess is to the word.\n',
-        colour=0X45c33a
+        colour = 0x45c33a
     )
     
     embed.add_field(

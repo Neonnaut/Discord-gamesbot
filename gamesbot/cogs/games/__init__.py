@@ -267,7 +267,7 @@ class Games(commands.Cog, name='games'):
             elif last == '8':
                 colour = 0x696969 # grey
             elif last == '9':
-                colour = 0Xf2efed # white
+                colour = 0xf2efed # white
             else:
                 colour = 0x000000 # black
 

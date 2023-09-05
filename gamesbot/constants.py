@@ -42,3 +42,31 @@ WARN = '⚠️'
 DIAMOND = '🔸'
 
 #POSTGRES_SERVER = os.getenv('POSTGRES_SERVER')
+
+"""
+class Colour(Enum):
+    default = 0XA69F9C
+    red = 0xBA0202
+    dark_red = 0x9E0F00
+    orange = 0xD96D0D
+    dark_orange = 0xAB4100
+    brown = 0x523110
+    yellow = 0xFFD414
+    green = 0X45C33A
+    dark_green = 0x116E06
+    blue = 0x137AD4
+    dark_blue = 0x145499
+    teal = 0x18AB8E
+    purple = 0xA30DE0
+    dark_purple = 0x5C1C78
+    blurple = 0x5865F2
+    magenta = 0x990066
+    pink = 0xf03799
+    grey = 0x858588
+    dark_grey = 0x3D3F45
+    gray = grey
+    dark_gray = dark_grey
+    @classmethod
+    def random(cls):
+        return random.choice(list(cls.__members__.values()))
+"""

@@ -17,7 +17,7 @@ async def get_github(arg, session) -> Embed:
             title = apijson['name'],
             url = apijson['html_url'],
             description = apijson['description'],
-            colour=0x0,
+            colour = 0x0,
         )
         
         embed.set_author(

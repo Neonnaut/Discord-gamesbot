@@ -302,7 +302,7 @@ class Utilities(commands.Cog, name='utilities'):
         except Exception as e:
             return await ctx.send(f'An error occurred: {e}')
 
-        embed = discord.Embed(title='Translated', colour=0x4284F3)
+        embed = discord.Embed(title='Translated', colour = 0x4284F3)
         embed.add_field(name=f'From {result.source_language}', value=result.original, inline=False)
         embed.add_field(name=f'To {result.target_language}', value=result.translated, inline=False)
         await ctx.send(embed=embed)
@@ -460,7 +460,7 @@ class Utilities(commands.Cog, name='utilities'):
             description=text,
             title=title,
             url=url,
-            color=0Xe30b5c
+            colour = 0Xe30b5c
         )
 
         try:

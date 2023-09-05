@@ -49,7 +49,7 @@ def print_minesweeper():
 
     embed = Embed(
         title='Minesweeper',
-        color=0X4C4E52
+        colour = 0x4C4E52
     )
 
     output = ''

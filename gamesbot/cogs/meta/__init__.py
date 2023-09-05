@@ -77,7 +77,7 @@ class Meta(commands.Cog, name='meta'):
                 title=f'About {self.bot.user.name}',
                 description=f'{DESCRIPTION if DESCRIPTION!=""else"..."}\n'\
                     +f'Use `{ctx.clean_prefix}help` for a list of commands.\n',
-                colour=0Xa69f9c
+                colour = 0xa69f9c
             )
             embed.set_author(name=f'{self.bot.user.name}',icon_url=self.bot.user.avatar.url)
             embed.add_field(name='Bot', inline=False, value=await get_bot(self.bot))
@@ -174,7 +174,7 @@ class Meta(commands.Cog, name='meta'):
         ]) or 'None'
 
         embed = discord.Embed(
-            title=f'Information About Server: {server.name}', colour=0Xa69f9c,
+            title=f'Information About Server: {server.name}', colour = 0xa69f9c,
             description=f'{DIAMOND}**Members**: {members}\n'\
                 f'{DIAMOND}**Channels**: {channels}\n'\
                 f'{DIAMOND}**Owner**: <@{server.owner.id}>\n'\

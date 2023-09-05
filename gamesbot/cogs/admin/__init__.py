@@ -90,7 +90,7 @@ class Admin(commands.Cog, name='admin'):
                 f'{"`✅`"if cog in self.bot.cogs.keys() else"`❌`"} {cog.capitalize()}'
                 for cog in cogs
             ]) or 'None',
-            colour=0Xa69f9c
+            colour = 0xa69f9c
         )
         embed.set_author(name=f'{self.bot.user.name}',icon_url=self.bot.user.avatar.url)
         await ctx.send(embed=embed)
@@ -114,7 +114,7 @@ class Admin(commands.Cog, name='admin'):
         embed = discord.Embed(
             title='Bot\'s Logs',
             description = f'```ansi\n{logs}```' if len(logs) > 0 else '`None`',
-            colour=0Xa69f9c
+            colour = 0xa69f9c
         )
         embed.set_author(name=f'{self.bot.user.name}',icon_url=self.bot.user.avatar.url)
         await ctx.send(embed=embed)
@@ -123,7 +123,7 @@ class Admin(commands.Cog, name='admin'):
     @commands.is_owner()
     async def list_permissions(self, ctx:commands.Context):
         """Lists the bot's permissions."""
-        embed = discord.Embed(title='Bot\'s Permissions', colour=0Xa69f9c)
+        embed = discord.Embed(title='Bot\'s Permissions', colour = 0xa69f9c)
         embed.add_field(
             name=f'{ctx.guild.name} Permissions',
             value='\n'.join([
@@ -151,7 +151,7 @@ class Admin(commands.Cog, name='admin'):
                 f'{DIAMOND} {guild}'
                 for guild in self.bot.guilds
             ]) or 'None',
-            colour=0Xa69f9c
+            colour = 0xa69f9c
         )
         embed.set_author(name=f'{self.bot.user.name}',icon_url=self.bot.user.avatar.url)
         await ctx.send(embed=embed)
@@ -183,7 +183,7 @@ class Admin(commands.Cog, name='admin'):
         embed = discord.Embed(
             title='Tables in Bot\'s Database',
             description='\n'.join(output) or 'None',
-            colour=0Xa69f9c
+            colour = 0xa69f9c
         )
         embed.set_author(name=f'{self.bot.user.name}',icon_url=self.bot.user.avatar.url)
         await ctx.send(embed=embed)

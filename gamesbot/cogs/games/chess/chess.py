@@ -184,7 +184,7 @@ class ChessMatch:
             self.board,
             lastmove=lastmove,
             check=check,
-            colors=
+            colors= # colours
                 dict.fromkeys('margin', 'coord') | {'margin':'#202225', 'coord':'#d6e8f5', 'square light':'#dee3e6', 'square dark':'#78bcde', 'square light lastmove':'#cfe69e', 'square dark lastmove':'#9dbf7c'},
             orientation=orientation
         )

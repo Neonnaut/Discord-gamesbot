@@ -146,7 +146,7 @@ class Chess_Lobby():
         embed = Embed(
             title='Discord Chess',
             description='Play a standard game of Chess with the bot or another user.',
-            colour=0x78bcde
+            colour = 0x78bcde
         )
         embed.add_field(
             inline=False,
