@@ -28,15 +28,11 @@ class Utilities(commands.Cog, name='utilities'):
     """Useful commands."""
     COG_EMOJI = '🔖'
 
-    def __init__(self, bot: discord.Client):
-        self.bot:discord.Client = bot
-        self.stopwatch_date = None
-
     @commands.command(aliases=['bc'])
     @commands.guild_only()
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def base_converter(
-        self, ctx:commands.Context,
+        self, ctx: commands.Context,
         number: str, from_base: int, to_base: int
     ):
         """
@@ -44,14 +40,14 @@ class Utilities(commands.Cog, name='utilities'):
         Don't try converting above base 36.
         """
         if len(str(number)) > 4 or len(str(from_base)) > 4 or len(str(to_base)) > 4:
-            return await self.bot.send_error(ctx, f'At least one of your inputs was over 4') 
+            return await self.bot.send_error(ctx, f'At least one of your inputs was over 4')
         output = await converter(number, from_base, to_base)
         await ctx.send(output)
 
     @commands.command()
     @commands.is_owner()
     @commands.guild_only()
-    async def calc(self, ctx:commands.Context, *, equation):
+    async def calc(self, ctx: commands.Context, *, equation):
         """Returns the result of a calculation.
         Example: |p|calc (a + b) - 2 + 2 ^ 5`"""
 
@@ -73,8 +69,8 @@ class Utilities(commands.Cog, name='utilities'):
             return await self.bot.send_error(ctx, 'There was something wrong with the input')
 
     @commands.guild_only()
-    @commands.command(aliases=['compile','coliru'])
-    async def compile_code(self, ctx:commands.Context, *, code: CodeBlock):
+    @commands.command(aliases=['compile', 'coliru'])
+    async def compile_code(self, ctx: commands.Context, *, code: CodeBlock):
         """Compiles code via Coliru.
 
         You have to pass in a code block with the language syntax
@@ -101,13 +97,12 @@ class Utilities(commands.Cog, name='utilities'):
                     return await ctx.send(f'```\n{output}\n```')
 
                 return await ctx.send('output is too big')
-                    
 
     @commands.command(aliases=['cc'])
     @commands.guild_only()
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def currency_converter(
-        self, ctx:commands.Context, * text: str
+        self, ctx: commands.Context, * text: str
     ):
         """
         Converts currencies in the format `<ammount> <currency> to <currency>`
@@ -123,7 +118,7 @@ class Utilities(commands.Cog, name='utilities'):
 
     @commands.command(aliases=['gh'])
     @commands.guild_only()
-    async def github(self, ctx:commands.Context, repo):
+    async def github(self, ctx: commands.Context, repo):
         """Fetches repository info from Github."""
 
         github = await get_github(repo, self.bot.session)
@@ -134,11 +129,11 @@ class Utilities(commands.Cog, name='utilities'):
     @commands.hybrid_command(description='Basic emoji based poll creator')
     @commands.guild_only()
     @commands.cooldown(1, 5, commands.BucketType.user)
-    async def poll(self, ctx:commands.Context,
-        title, option1, option2,
-        option3: Optional[str], option4: Optional[str], option5: Optional[str], option6: Optional[str],
-        option7: Optional[str], option8: Optional[str], option9: Optional[str], option10: Optional[str]
-    ):
+    async def poll(self, ctx: commands.Context,
+                   title, option1, option2,
+                   option3: Optional[str], option4: Optional[str], option5: Optional[str], option6: Optional[str],
+                   option7: Optional[str], option8: Optional[str], option9: Optional[str], option10: Optional[str]
+                   ):
         """
         Creates a poll for users to vote on using emoji.
         Remember to enclose options that have spaces in them with quotes, e.g:
@@ -178,13 +173,15 @@ class Utilities(commands.Cog, name='utilities'):
                     options[i] = things[i]
 
         keycap = '\N{variation selector-16}\N{combining enclosing keycap}'
-        numbers = ['1'+keycap, '2'+keycap, '3'+keycap, '4'+keycap, '5'+keycap, '6'+keycap, '7'+keycap, '8'+keycap, '9'+keycap, '\N{keycap ten}']
+        numbers = ['1'+keycap, '2'+keycap, '3'+keycap, '4'+keycap, '5'+keycap,
+                   '6'+keycap, '7'+keycap, '8'+keycap, '9'+keycap, '\N{keycap ten}']
         reactions = []
         for i in range(0, len(options)):
             if options[i] != None:
 
                 foundEmoji = None
-                data = regex.match(r'<(?P<animated>a?):(?P<name>[a-zA-Z0-9_]{2,32}):(?P<id>[0-9]{18,22})>', options[i])
+                data = regex.match(
+                    r'<(?P<animated>a?):(?P<name>[a-zA-Z0-9_]{2,32}):(?P<id>[0-9]{18,22})>', options[i])
                 if data == None:
                     if options[i][0] in emoji.EMOJI_DATA:
                         data = regex.findall(r'\X', options[i])
@@ -210,7 +207,7 @@ class Utilities(commands.Cog, name='utilities'):
         )
         embed.set_author(
             name=f'{ctx.author.display_name}',
-            icon_url=ctx.author.avatar
+            icon_url=ctx.author.display_avatar
         )
 
         msg = await ctx.reply(embed=embed)
@@ -238,8 +235,8 @@ class Utilities(commands.Cog, name='utilities'):
             myTime = datetime.utcnow() - self.stopwatch_date
 
             total_seconds = int(myTime.total_seconds())
-            hours, remainder = divmod(total_seconds,60*60)
-            minutes, seconds = divmod(remainder,60)
+            hours, remainder = divmod(total_seconds, 60*60)
+            minutes, seconds = divmod(remainder, 60)
 
             if hours == 0:
                 hours = ''
@@ -266,7 +263,7 @@ class Utilities(commands.Cog, name='utilities'):
     @commands.command(aliases=['timeat'])
     @commands.guild_only()
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def time_at(self, ctx:commands.Context, *, zone: str):
+    async def time_at(self, ctx: commands.Context, *, zone: str):
         """Gets the current time of a timezone.
 
         Examples: `|p|timeat Asia/Tokyo`, `|p|timeat GMT+1`, `|p|timeat US/Eastern`"""
@@ -295,23 +292,25 @@ class Utilities(commands.Cog, name='utilities'):
 
     @commands.guild_only()
     @commands.command()
-    async def translate(self, ctx:commands.Context, *, message):
+    async def translate(self, ctx: commands.Context, *, message):
         """Translates a message to English using Google translate."""
         try:
             result = await translate(message, session=self.bot.session)
         except Exception as e:
             return await ctx.send(f'An error occurred: {e}')
 
-        embed = discord.Embed(title='Translated', colour = 0x4284F3)
-        embed.add_field(name=f'From {result.source_language}', value=result.original, inline=False)
-        embed.add_field(name=f'To {result.target_language}', value=result.translated, inline=False)
+        embed = discord.Embed(title='Translated', colour=0x4284F3)
+        embed.add_field(
+            name=f'From {result.source_language}', value=result.original, inline=False)
+        embed.add_field(name=f'To {result.target_language}',
+                        value=result.translated, inline=False)
         await ctx.send(embed=embed)
 
     @commands.command(aliases=['uc'])
     @commands.guild_only()
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def unit_converter(
-        self, ctx:commands.Context, * text: str
+        self, ctx: commands.Context, * text: str
     ):
         """
         Converts a unit of measurement to another in the format `<number> <unit_type> to <unit_type>`. e.g:
@@ -329,13 +328,13 @@ class Utilities(commands.Cog, name='utilities'):
     @commands.hybrid_command()
     @commands.guild_only()
     @commands.cooldown(1, 3, commands.BucketType.default)
-    async def weather(self, ctx:commands.Context, location):
+    async def weather(self, ctx: commands.Context, location):
         """Shows the weather of a city or locale."""
-        m_location = ctx.message.content.replace(ctx.prefix,'').split(' ')
+        m_location = ctx.message.content.replace(ctx.prefix, '').split(' ')
         m_location = ' '.join(m_location[1:]).strip()
         location = m_location if m_location else location
 
-        lx=location.casefold()
+        lx = location.casefold()
         if lx == 'melbourne':
             location = 'Melbourne, AU'
         elif lx == 'sydney':
@@ -396,7 +395,8 @@ class Utilities(commands.Cog, name='utilities'):
                 + f'\n{DIAMOND}**Wind**: {myWind} km/h'
             )
             try:
-                embed.set_thumbnail(url=f'https://openweathermap.org/img/wn/{icon}@2x.png')
+                embed.set_thumbnail(
+                    url=f'https://openweathermap.org/img/wn/{icon}@2x.png')
             except:
                 pass
         except Exception as e:
@@ -409,11 +409,11 @@ class Utilities(commands.Cog, name='utilities'):
     @commands.guild_only()
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def wikipedia(
-        self, ctx:commands.Context, * query: str
+        self, ctx: commands.Context, * query: str
     ):
         """Shows a summary of a wikipedia article"""
         query = ' '.join(query)
-        query = query.replace("'",'%27').replace(' ','_')
+        query = query.replace("'", '%27').replace(' ', '_')
 
         url = f'https://en.wikipedia.org/wiki/{query}'
         response = await self.bot.session.get(url=url)
@@ -421,15 +421,15 @@ class Utilities(commands.Cog, name='utilities'):
             return await self.bot.send_error(ctx, f'"{query}" not found.')
         elif response.status != 200:
             return await self.bot.send_error(ctx, f'Wikipedia did not respond.')
-        
+
         response = await response.read()
         loop = asyncio.get_event_loop()
         soup = await loop.run_in_executor(None,
-            BeautifulSoup, response.decode('utf-8'), 'html.parser'
-        ) # lxml is faster, but needs install
+                                          BeautifulSoup, response.decode(
+                                              'utf-8'), 'html.parser'
+                                          )  # lxml is faster, but needs install
 
         title = soup.find('h1', {'id': 'firstHeading'}).text
-
 
         my_p = soup.select_one('p', {'class': 'mw-empty-elt'})
         text = ''
@@ -437,7 +437,7 @@ class Utilities(commands.Cog, name='utilities'):
         do_continue = True
         while done_ps < 2 and do_continue:
             if my_p.name == 'p':
-                text+= my_p.text
+                text += my_p.text
                 done_ps += 1
             try:
                 my_p = my_p.find_next_sibling()
@@ -448,19 +448,19 @@ class Utilities(commands.Cog, name='utilities'):
 
         if len(text) > 697:
             text = text.rstrip()[:600]
-            if text[-1] in ['.','!','?']:
+            if text[-1] in ['.', '!', '?']:
                 pass
             elif text[-1] in [' ', ',']:
                 text = f'{text[:-1]}...'
             else:
                 text = f'{text}...'
         text = regex.sub('\[[0-9]+\]', '', text)
-        
+
         embed = Embed(
             description=text,
             title=title,
             url=url,
-            colour = 0xe30b5c
+            colour=0xe30b5c
         )
 
         try:
@@ -477,7 +477,7 @@ class Utilities(commands.Cog, name='utilities'):
 
     @commands.command()
     @commands.guild_only()
-    async def gloss(self, ctx:commands.Context, *, text):
+    async def gloss(self, ctx: commands.Context, *, text):
         """Format lingustic gloss into columns. Last line should be a translation."""
         text = text.split('\n')
         last_line = ''
@@ -486,7 +486,6 @@ class Utilities(commands.Cog, name='utilities'):
         elif len(text) > 2:
             last_line = text.pop()
         text = '\n'.join(text)
-
 
         blocks = text.split('\n\n')
 
@@ -499,7 +498,7 @@ class Utilities(commands.Cog, name='utilities'):
     @commands.command()
     @commands.guild_only()
     @commands.cooldown(1, 5, commands.BucketType.user)
-    async def ipa(self, ctx:commands.Context):
+    async def ipa(self, ctx: commands.Context):
         """Shows information on IPA symbols."""
         text = """```
 CONSONANTS
@@ -567,7 +566,7 @@ SUPRASEGMENTALS
  ↓   downstep
 ```"""
         embed = discord.Embed(
-            #title=title,
+            # title=title,
             description=text
         )
         await ctx.send(embed=embed)
@@ -575,7 +574,7 @@ SUPRASEGMENTALS
     @commands.hybrid_command(aliases=['rw'])
     @commands.guild_only()
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def random_word(self, ctx:commands.Context, *, text):
+    async def random_word(self, ctx: commands.Context, *, text):
         """
         Generates a random phonological word with the following abbreviations:
         **A**: africate, **C**: consonant, **E**: ejective, **F**: fricative,
@@ -595,7 +594,7 @@ SUPRASEGMENTALS
     @commands.command(aliases=['syntax'])
     @commands.guild_only()
     @commands.cooldown(1, 5, commands.BucketType.user)
-    async def syntax_test(self, ctx:commands.Context):
+    async def syntax_test(self, ctx: commands.Context):
         """Displays a random sentence for you to test a language's syntax."""
         sentences = open('cogs/utilities/syntax_list.txt').read().splitlines()
         rando = random.randint(0, len(sentences))
@@ -606,7 +605,7 @@ SUPRASEGMENTALS
     @commands.command(aliases=['sampa'])
     @commands.guild_only()
     @commands.cooldown(1, 5, commands.BucketType.user)
-    async def xsampa(self, ctx:commands.Context):
+    async def xsampa(self, ctx: commands.Context):
         """Shows X-sampa notation help."""
         text = """```
 CONSONANTS
@@ -686,7 +685,7 @@ TONES
 ```"""
         text = text.replace('/', '\\')
         embed = discord.Embed(
-            #title=title,
+            # title=title,
             description=text
         )
         await ctx.send(embed=embed)
@@ -694,7 +693,7 @@ TONES
     @commands.command()
     @commands.guild_only()
     @commands.cooldown(1, 10, commands.BucketType.user)
-    async def xti(self, ctx:commands.Context, *, input):
+    async def xti(self, ctx: commands.Context, *, input):
         """Converts X-SAMPA to IPA. Maximum of 200 characters."""
 
         if len(input) > 200:
@@ -704,10 +703,10 @@ TONES
 
         words = input.split()
 
-        x = ['S\\', 'z\\','_R_F', 'J\\_<', '_H_T', 'G\\_<', '_B_L', '\|\\\|\\', 'r\\`', '<R>', 'g_<', '<F>', 'd_<', 'b_<', '_\?\\', 'z\\', 'z`', 'X\\', 'x\\', '_x', '_X', '_w', 'v\\', '_v', 'U\\', 't`', '_t', '_T', 's\\', 's`', 'r\\', 'r`', '_r', 'R\\', '_R', '_q', 'p\\', '_o', 'O\\', '_O', 'n`', '_n', 'N\\', '_N', '_m', 'M\\', '_M', 'l\\', 'l`', '_l', 'L\\', '_L', '_k', 'K\\', 'j\\', '_j', 'J\\', 'I\\', 'h\\', '_h', 'H\\', '_H', 'G\\', '_G', '_F', '_e', 'd`', '_d', '_c', 'B\\', '_B', '_a', '_A', '3\\', '_0', '@\\', '\?\\', '\!\\',
+        x = ['S\\', 'z\\', '_R_F', 'J\\_<', '_H_T', 'G\\_<', '_B_L', '\|\\\|\\', 'r\\`', '<R>', 'g_<', '<F>', 'd_<', 'b_<', '_\?\\', 'z\\', 'z`', 'X\\', 'x\\', '_x', '_X', '_w', 'v\\', '_v', 'U\\', 't`', '_t', '_T', 's\\', 's`', 'r\\', 'r`', '_r', 'R\\', '_R', '_q', 'p\\', '_o', 'O\\', '_O', 'n`', '_n', 'N\\', '_N', '_m', 'M\\', '_M', 'l\\', 'l`', '_l', 'L\\', '_L', '_k', 'K\\', 'j\\', '_j', 'J\\', 'I\\', 'h\\', '_h', 'H\\', '_H', 'G\\', '_G', '_F', '_e', 'd`', '_d', '_c', 'B\\', '_B', '_a', '_A', '3\\', '_0', '@\\', '\?\\', '\!\\',
              ':\\', '\-\\', '_\+', '_\\', '_\}', '_"', '_/', '_\-', '_>', '_=', '_~', '_\^', '\|\\', '\|\|', '>\\', '=\\', '<\\', 'Z', 'z', 'y', 'Y', 'X', 'x', 'w', 'W', 'v', 'V', 'u', 'U', 'T', 't', 's', 'S', 'r', 'R', 'q', 'Q', 'p', 'P', 'O', 'o', 'N', 'n', 'm', 'M', 'l', 'L', 'k', 'K', 'j', 'J', 'i', 'I', 'h', 'H', 'g', 'G', 'f', 'F', 'E', 'e', '@', 'D', 'd', 'C', 'c', 'B', 'b', '{', 'a', 'A', '9', '8', '7', '6', '5', '4', '3', '2', '1', '%', '&', '\}', '"', '\'', '\.', '\?', '\!', ':', '\|', '=', '~', '\^', '`', 't_s', 'd_z',
              ]
-        p = ['ɕ', 'ʑ','\u1DC8', 'ʄ', '\u1DC4', 'ʛ', '\u1DC5', 'ǁ', 'ɻ', '↗', 'ɠ', '↘', 'ɗ', 'ɓ', 'ˤ', 'ʑ', 'ʐ', 'ħ', 'ɧ', '\u033D', '\u0306̆', 'ʷ', 'ʋ', '\u032C', 'ᵿ', 'ʈ', '\u0324', '	\u02DD', 'ɕ', 'ʂ', 'ɹ', 'ɽ', '\u031D', 'ʀ', '\u02C7', '\u0319', 'ɸ', '\u031E', 'ʘ', '\u0339', 'ɳ', 'ⁿ', 'ɴ', '\u033C', '\u033B', 'ɰ', '\u0304', 'ɺ', 'ɭ', 'ˡ', 'ʟ', '\u0300', '\u0330', 'ɮ', 'ʝ', 'ʲ', 'ɟ', 'ᵻ', 'ɦ', 'ʰ', 'ʜ', '\u0301', 'ɢ', 'ˠ', '\u0302', '\u0334', 'ɖ', '\u032A', '\u031C', 'ʙ', '\u030F', '\u033A', '\u0318', 'ɞ', '\u0325', 'ɘ', 'ʕ', 'ǃ', 'ˑ', '‿', '\u031F', '\u0302',
+        p = ['ɕ', 'ʑ', '\u1DC8', 'ʄ', '\u1DC4', 'ʛ', '\u1DC5', 'ǁ', 'ɻ', '↗', 'ɠ', '↘', 'ɗ', 'ɓ', 'ˤ', 'ʑ', 'ʐ', 'ħ', 'ɧ', '\u033D', '\u0306̆', 'ʷ', 'ʋ', '\u032C', 'ᵿ', 'ʈ', '\u0324', '	\u02DD', 'ɕ', 'ʂ', 'ɹ', 'ɽ', '\u031D', 'ʀ', '\u02C7', '\u0319', 'ɸ', '\u031E', 'ʘ', '\u0339', 'ɳ', 'ⁿ', 'ɴ', '\u033C', '\u033B', 'ɰ', '\u0304', 'ɺ', 'ɭ', 'ˡ', 'ʟ', '\u0300', '\u0330', 'ɮ', 'ʝ', 'ʲ', 'ɟ', 'ᵻ', 'ɦ', 'ʰ', 'ʜ', '\u0301', 'ɢ', 'ˠ', '\u0302', '\u0334', 'ɖ', '\u032A', '\u031C', 'ʙ', '\u030F', '\u033A', '\u0318', 'ɞ', '\u0325', 'ɘ', 'ʕ', 'ǃ', 'ˑ', '‿', '\u031F', '\u0302',
              '\u031A', '\u00A8', '\u030C', '\u0320', 'ʼ', '\u0329', '\u0303', '\u032F', 'ǀ', '‖', 'ʡ', 'ǂ', 'ʢ', 'ʒ', 'z', 'y', 'ʏ', 'χ', 'x', 'w', 'ʍ', 'v', 'ʌ', 'u', 'ʊ', 'θ', 't', 's', 'ʃ', 'r', 'ʁ', 'q', 'ɒ', 'p', 'ʋ', 'ɔ', 'o', 'ŋ', 'n', 'm', 'ɯ', 'l', 'ʎ', 'k', 'ɬ', 'j', 'ɲ', 'i', 'ɪ', 'h', 'ɥ', 'ɡ', 'ɣ', 'f', 'ɱ', 'ɛ', 'e', 'ə', 'ð', 'd', 'ç', 'c', 'β', 'b', 'æ', 'a', 'ɑ', 'œ', 'ɵ', 'ɤ', 'ɐ', 'ɫ', 'ɾ', 'ɜ', 'ø', 'ɨ', 'ˌ', 'ɶ', 'ʉ', '\ˈ', 'ʲ', '.', 'ʔ', 'ꜜ', 'ː', '|', '\u0329', '\u0303', 'ꜛ', '˞ ', 't͡s', 'd͡z',
              ]
 
@@ -718,6 +717,7 @@ TONES
             output += word + ' '
 
         await ctx.send(output)
+
 
 async def setup(bot: commands.bot):
     await bot.add_cog(Utilities(bot))

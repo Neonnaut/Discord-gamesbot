@@ -10,22 +10,29 @@ logger = logging.getLogger('logger')
 
 COGSFILE = 'cogs.'
 
+
 class Admin(commands.Cog, name='admin'):
     """For administrators only."""
     COG_EMOJI = '⚙️'
 
-    def __init__(self, bot:commands.Bot):
-        self.bot:discord.Client = bot
+    def __init__(self, bot: commands.Bot):
+        self.bot: discord.Client = bot
 
     @commands.command()
     @commands.is_owner()
-    async def load_cog(self, ctx:commands.Context, *, cog:str):
+    async def dz(self, ctx: commands.Context):
+        async for entry in ctx.guild.audit_logs(limit=100):
+            logger.info(f'{entry.user} did {entry.action} to {entry.target}')
+
+    @commands.command()
+    @commands.is_owner()
+    async def load_cog(self, ctx: commands.Context, *, cog: str):
         """Command which loads a cog.
         Example: `|p|load misc`"""
         cog = cog.casefold()
         try:
             await self.bot.load_extension(f'{COGSFILE}{cog}')
-            #importlib.reload(module)
+            # importlib.reload(module)
             await ctx.send(f'{CHECK} Successfully loaded: {cog}')
         except commands.ExtensionError as e:
             logger.exception(str(e))
@@ -33,7 +40,7 @@ class Admin(commands.Cog, name='admin'):
 
     @commands.command()
     @commands.is_owner()
-    async def reload_cog(self, ctx:commands.Context, *, cog:str):
+    async def reload_cog(self, ctx: commands.Context, *, cog: str):
         """Command which reloads a cog.
         Example: `|p|reloadCog misc`"""
         cog = cog.casefold()
@@ -47,7 +54,7 @@ class Admin(commands.Cog, name='admin'):
 
     @commands.command()
     @commands.is_owner()
-    async def reload_cogs(self, ctx:commands.Context):
+    async def reload_cogs(self, ctx: commands.Context):
         """Command which reloads all cogs."""
         for cog in self.bot.cogs.keys():
             await self.bot.load_extension(f'{COGSFILE}{cog}')
@@ -62,7 +69,7 @@ class Admin(commands.Cog, name='admin'):
 
     @commands.command()
     @commands.is_owner()
-    async def unload_cog(self, ctx:commands.Context, *, cog:str):
+    async def unload_cog(self, ctx: commands.Context, *, cog: str):
         """Command which unloads a cog.
         Example: `|p|unloadCog misc`"""
         cog = cog.casefold()
@@ -74,15 +81,16 @@ class Admin(commands.Cog, name='admin'):
         except commands.ExtensionError as e:
             logger.exception(str(e))
             return await self.bot.send_error(ctx, e)
-        
+
     @commands.command()
     @commands.is_owner()
-    async def list_cogs(self, ctx:commands.Context):
+    async def list_cogs(self, ctx: commands.Context):
         """Lists all cogs."""
         cogs = [
             cog[:-3] if cog.endswith('.py') else cog
             for cog in sorted(os.listdir('./cogs'))
-            if not cog.startswith('__') #and not os.path.isdir(f'./cogs/{cog}')
+            # and not os.path.isdir(f'./cogs/{cog}')
+            if not cog.startswith('__')
         ]
         embed = discord.Embed(
             title='Bot\'s Cogs',
@@ -90,21 +98,22 @@ class Admin(commands.Cog, name='admin'):
                 f'{"`✅`"if cog in self.bot.cogs.keys() else"`❌`"} {cog.capitalize()}'
                 for cog in cogs
             ]) or 'None',
-            colour = 0xa69f9c
+            colour=0xa69f9c
         )
-        embed.set_author(name=f'{self.bot.user.name}',icon_url=self.bot.user.avatar.url)
+        embed.set_author(name=f'{self.bot.user.name}',
+                         icon_url=self.bot.user.display_avatar.url)
         await ctx.send(embed=embed)
 
     @commands.command()
     @commands.is_owner()
-    async def list_logs(self, ctx:commands.Context):
+    async def list_logs(self, ctx: commands.Context):
         """Lists last 12 logs in the log file."""
         try:
             logs = open('bot.log').read().splitlines()
         except:
             logs = '`None`'
         else:
-            logs='\n\n'.join([
+            logs = '\n\n'.join([
                 log
                 for log in logs
                 if log != ''
@@ -113,17 +122,18 @@ class Admin(commands.Cog, name='admin'):
 
         embed = discord.Embed(
             title='Bot\'s Logs',
-            description = f'```ansi\n{logs}```' if len(logs) > 0 else '`None`',
-            colour = 0xa69f9c
+            description=f'```ansi\n{logs}```' if len(logs) > 0 else '`None`',
+            colour=0xa69f9c
         )
-        embed.set_author(name=f'{self.bot.user.name}',icon_url=self.bot.user.avatar.url)
+        embed.set_author(name=f'{self.bot.user.name}',
+                         icon_url=self.bot.user.display_avatar.url)
         await ctx.send(embed=embed)
 
     @commands.command()
     @commands.is_owner()
-    async def list_permissions(self, ctx:commands.Context):
+    async def list_permissions(self, ctx: commands.Context):
         """Lists the bot's permissions."""
-        embed = discord.Embed(title='Bot\'s Permissions', colour = 0xa69f9c)
+        embed = discord.Embed(title='Bot\'s Permissions', colour=0xa69f9c)
         embed.add_field(
             name=f'{ctx.guild.name} Permissions',
             value='\n'.join([
@@ -138,12 +148,13 @@ class Admin(commands.Cog, name='admin'):
                 for name, value in discord.Intents.all()
             ]) or 'None'
         )
-        embed.set_author(name=f'{self.bot.user.name}',icon_url=self.bot.user.avatar.url)
+        embed.set_author(name=f'{self.bot.user.name}',
+                         icon_url=self.bot.user.display_avatar.url)
         await ctx.send(embed=embed)
 
     @commands.command()
     @commands.is_owner()
-    async def list_servers(self, ctx:commands.Context):
+    async def list_servers(self, ctx: commands.Context):
         """Lists all the servers the bot is in."""
         embed = discord.Embed(
             title='Servers Bot Is In',
@@ -151,14 +162,15 @@ class Admin(commands.Cog, name='admin'):
                 f'{DIAMOND} {guild}'
                 for guild in self.bot.guilds
             ]) or 'None',
-            colour = 0xa69f9c
+            colour=0xa69f9c
         )
-        embed.set_author(name=f'{self.bot.user.name}',icon_url=self.bot.user.avatar.url)
+        embed.set_author(name=f'{self.bot.user.name}',
+                         icon_url=self.bot.user.display_avatar.url)
         await ctx.send(embed=embed)
 
     @commands.command()
     @commands.is_owner()
-    async def list_tables(self, ctx:commands.Context):
+    async def list_tables(self, ctx: commands.Context):
         """Lists all tables in bot's database."""
         output = []
 
@@ -183,15 +195,16 @@ class Admin(commands.Cog, name='admin'):
         embed = discord.Embed(
             title='Tables in Bot\'s Database',
             description='\n'.join(output) or 'None',
-            colour = 0xa69f9c
+            colour=0xa69f9c
         )
-        embed.set_author(name=f'{self.bot.user.name}',icon_url=self.bot.user.avatar.url)
+        embed.set_author(name=f'{self.bot.user.name}',
+                         icon_url=self.bot.user.display_avatar.url)
         await ctx.send(embed=embed)
 
     @commands.command()
     @commands.guild_only()
     @commands.is_owner()
-    async def change_nickname(self, ctx:commands.Context, *, name:str):
+    async def change_nickname(self, ctx: commands.Context, *, name: str):
         """Changes the bot's nickname. Up to 20 characters only.
         Example: `|p|changeNickname Betty`"""
         if len(name) > 20:
@@ -206,12 +219,12 @@ class Admin(commands.Cog, name='admin'):
     @commands.command()
     @commands.guild_only()
     @commands.is_owner()
-    async def change_presence(self, ctx:commands.Context, activity:str, status:Optional[discord.Status]):
+    async def change_presence(self, ctx: commands.Context, activity: str, status: Optional[discord.Status]):
         """Changes the bot's nickname. Up to 20 characters only.
         Example: `|p|changeNickname Betty`"""
         try:
             await self.bot.change_presence(
-                activity=discord.CustomActivity(name = activity),
+                activity=discord.CustomActivity(name=activity),
                 status=status
             )
         except Exception as e:
@@ -222,14 +235,15 @@ class Admin(commands.Cog, name='admin'):
     @commands.command()
     @commands.guild_only()
     @commands.is_owner()
-    async def change_prefix(self, ctx:commands.Context, prefix:str):
+    async def change_prefix(self, ctx: commands.Context, prefix: str):
         """Sets a custom prefix. Prefix must be ASCII and be no more than 3 characters."""
         if len(prefix) > 3:
             return await self.bot.send_error(ctx, 'The custom prefix is over 3 characters!')
         elif not prefix.isascii():
             return await self.bot.send_error(ctx, 'The custom prefix is not ASCI2!')
         try:
-            self.bot.command_prefix = commands.when_mentioned_or(*[PREFIX, prefix])
+            self.bot.command_prefix = commands.when_mentioned_or(
+                *[PREFIX, prefix])
         except Exception as e:
             logger.exception(str(e))
             return await self.bot.send_error(ctx, 'An error occured. Nothing happened')
@@ -237,7 +251,7 @@ class Admin(commands.Cog, name='admin'):
 
     @commands.command()
     @commands.is_owner()
-    async def disable_command(self, ctx:commands.Context, command):
+    async def disable_command(self, ctx: commands.Context, command):
         """Disables a command."""
         command = self.bot.get_command(command)
         if not command:
@@ -245,11 +259,11 @@ class Admin(commands.Cog, name='admin'):
         if not command.enabled:
             return await self.bot.send_error(ctx, 'This command is already disabled')
         command.update(enabled=False)
-        await ctx.reply(f'{CHECK} {command.name.capitalize()} disabled.',mention_author=False)
+        await ctx.reply(f'{CHECK} {command.name.capitalize()} disabled.', mention_author=False)
 
     @commands.command()
     @commands.is_owner()
-    async def enable_command(self, ctx:commands.Context, command):
+    async def enable_command(self, ctx: commands.Context, command):
         """(Re)Enables a command."""
         command = self.bot.get_command(command)
         if not command:
@@ -257,17 +271,17 @@ class Admin(commands.Cog, name='admin'):
         if command.enabled:
             return await self.bot.send_error(ctx, 'This command is already enabled')
         command.update(enabled=True)
-        await ctx.reply(f'{CHECK} {command.name.capitalize()} enabled.',mention_author=False)
+        await ctx.reply(f'{CHECK} {command.name.capitalize()} enabled.', mention_author=False)
 
     @commands.command()
     @commands.is_owner()
-    async def leave_guild(self, ctx:commands.Context, *, guild_name):
+    async def leave_guild(self, ctx: commands.Context, *, guild_name):
         """Leaves a guild the bot is in."""
         guild = discord.utils.get(self.bot.guilds, name=guild_name)
         if guild is None:
             return await self.bot.send_error(ctx, 'No guild with that name found.')
         try:
-            await guild.leave() # Guild found
+            await guild.leave()  # Guild found
             await ctx.send(f'I left {guild.name}!')
         except Exception as e:
             logger.exception(str(e))
@@ -276,7 +290,7 @@ class Admin(commands.Cog, name='admin'):
     @commands.command()
     @commands.is_owner()
     @commands.guild_only()
-    async def sleep(self, ctx:commands.Context):
+    async def sleep(self, ctx: commands.Context):
         """This disconnects the bot."""
         for cog in sorted(os.listdir('./cogs')):
             if os.path.isdir(f'./cogs/{cog}') and not cog.startswith('__'):
@@ -290,7 +304,7 @@ class Admin(commands.Cog, name='admin'):
 
     @commands.command()
     @commands.is_owner()
-    async def sync_commands(self, ctx:commands.Context):
+    async def sync_commands(self, ctx: commands.Context):
         """Syncs slash commands globaly."""
         try:
             commands = await self.bot.tree.sync(guild=None)
@@ -298,6 +312,7 @@ class Admin(commands.Cog, name='admin'):
         except Exception as e:
             logger.exception(str(e))
             await self.bot.send_error(ctx, 'Slash commands were not synced!')
+
 
 async def setup(bot: commands.bot):
     await bot.add_cog(Admin(bot))
