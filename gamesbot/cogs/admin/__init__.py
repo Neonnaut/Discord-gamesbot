@@ -56,10 +56,10 @@ class Admin(commands.Cog, name='admin'):
     @commands.is_owner()
     async def reload_cogs(self, ctx: commands.Context):
         """Command which reloads all cogs."""
-        for cog in self.bot.cogs.keys():
-            await self.bot.load_extension(f'{COGSFILE}{cog}')
-            await self.bot.unload_extension(f'{COGSFILE}{cog}')
+        cogs = dict(self.bot.cogs)
+        for cog in cogs.keys():
             try:
+                await self.bot.unload_extension(f'{COGSFILE}{cog}')
                 await self.bot.load_extension(f'{COGSFILE}{cog}')
                 await ctx.send(f'{CHECK} Reloaded {cog}')
             except commands.ExtensionError as e:

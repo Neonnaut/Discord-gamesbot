@@ -36,12 +36,12 @@ PROJECTSTART = datetime.strptime('2022, 10, 24', '%Y, %m, %d')
 SKIPPEDWEEKS = int(1)
 
 # Emojis
-CHECK = '✅>'
+CHECK = '✅'
 ERR = '❌'
 WARN = '⚠️'
 DIAMOND = '🔸'
 
-#POSTGRES_SERVER = os.getenv('POSTGRES_SERVER')
+# POSTGRES_SERVER = os.getenv('POSTGRES_SERVER')
 
 """
 class Colour(Enum):
